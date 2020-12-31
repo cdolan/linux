@@ -2669,6 +2669,7 @@ static void __exit exit_btrfs_fs(void)
 {
 	btrfs_destroy_cachep();
 	btrfs_delayed_ref_exit();
+	btrfs_qgroup_extent_record_cachep_exit();
 	btrfs_auto_defrag_exit();
 	btrfs_delayed_inode_exit();
 	btrfs_prelim_ref_exit();
