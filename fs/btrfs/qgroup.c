@@ -1668,6 +1668,25 @@ out:
 	return ret;
 }
 
+struct kmem_cache *btrfs_qgroup_extent_record_cachep;
+
+int __init btrfs_qgroup_extent_record_cachep_init(void)
+{
+	btrfs_qgroup_extent_record_cachep = kmem_cache_create(
+			"btrfs_qgroup_extent_record",
+			sizeof(struct btrfs_qgroup_extent_record), 0,
+			0, NULL);
+	if (!btrfs_qgroup_extent_record_cachep)
+		return -ENOMEM;
+
+	return 0;
+}
+
+void __cold btrfs_qgroup_extent_record_cachep_exit(void)
+{
+	kmem_cache_destroy(btrfs_qgroup_extent_record_cachep);
+}
+
 int btrfs_qgroup_trace_extent_nolock(struct btrfs_fs_info *fs_info,
 				struct btrfs_delayed_ref_root *delayed_refs,
 				struct btrfs_qgroup_extent_record *record)

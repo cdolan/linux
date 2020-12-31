@@ -261,6 +261,10 @@ int btrfs_read_qgroup_config(struct btrfs_fs_info *fs_info);
 void btrfs_free_qgroup_config(struct btrfs_fs_info *fs_info);
 struct btrfs_delayed_extent_op;
 
+extern struct kmem_cache *btrfs_qgroup_extent_record_cachep;
+int __init btrfs_qgroup_extent_record_cachep_init(void);
+void __cold btrfs_qgroup_extent_record_cachep_exit(void);
+
 /*
  * Inform qgroup to trace one dirty extent, its info is recorded in @record.
  * So qgroup can account it at transaction committing time.
