@@ -1760,7 +1760,7 @@ int btrfs_qgroup_trace_extent(struct btrfs_trans_handle *trans, u64 bytenr,
 	if (!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags)
 	    || bytenr == 0 || num_bytes == 0)
 		return 0;
-	record = kzalloc(sizeof(*record), gfp_flag);
+	record = kmem_cache_zalloc(btrfs_qgroup_extent_record_cachep, gfp_flag);
 	if (!record)
 		return -ENOMEM;
 
@@ -1773,7 +1773,7 @@ int btrfs_qgroup_trace_extent(struct btrfs_trans_handle *trans, u64 bytenr,
 	ret = btrfs_qgroup_trace_extent_nolock(fs_info, delayed_refs, record);
 	spin_unlock(&delayed_refs->lock);
 	if (ret > 0) {
-		kfree(record);
+		kmem_cache_free(btrfs_qgroup_extent_record_cachep, record);
 		return 0;
 	}
 	return btrfs_qgroup_trace_extent_post(fs_info, record);
