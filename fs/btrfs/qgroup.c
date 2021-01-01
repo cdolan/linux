@@ -2683,7 +2683,7 @@ cleanup:
 		ulist_free(new_roots);
 		new_roots = NULL;
 		rb_erase(node, &delayed_refs->dirty_extent_root);
-		kfree(record);
+		kmem_cache_free(btrfs_qgroup_extent_record_cachep, record);
 
 	}
 	trace_qgroup_num_dirty_extents(fs_info, trans->transid,
