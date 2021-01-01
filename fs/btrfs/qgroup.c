@@ -4289,6 +4289,6 @@ void btrfs_qgroup_destroy_extent_records(struct btrfs_transaction *trans)
 	root = &trans->delayed_refs.dirty_extent_root;
 	rbtree_postorder_for_each_entry_safe(entry, next, root, node) {
 		ulist_free(entry->old_roots);
-		kfree(entry);
+		kmem_cache_free(btrfs_qgroup_extent_record_cachep, entry);
 	}
 }
