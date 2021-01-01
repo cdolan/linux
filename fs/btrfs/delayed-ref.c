@@ -832,7 +832,7 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
 	if (qrecord) {
 		if (btrfs_qgroup_trace_extent_nolock(trans->fs_info,
 					delayed_refs, qrecord))
-			kfree(qrecord);
+			kmem_cache_free(btrfs_qgroup_extent_record_cachep, qrecord);
 		else
 			qrecord_inserted = 1;
 	}
