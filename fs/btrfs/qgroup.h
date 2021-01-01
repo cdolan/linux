@@ -100,10 +100,7 @@
  *     subtree rescan for them.
  */
 
-/*
- * Record a dirty extent, and info qgroup to update quota on it
- * TODO: Use kmem cache to alloc it.
- */
+/* Record a dirty extent, and info qgroup to update quota on it */
 struct btrfs_qgroup_extent_record {
 	struct rb_node node;
 	u64 bytenr;
