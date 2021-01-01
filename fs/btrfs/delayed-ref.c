@@ -1071,7 +1071,8 @@ int btrfs_add_delayed_data_ref(struct btrfs_trans_handle *trans,
 	    is_fstree(ref_root) &&
 	    is_fstree(generic_ref->real_root) &&
 	    !generic_ref->skip_qgroup) {
-		record = kzalloc(sizeof(*record), GFP_NOFS);
+		record = kmem_cache_zalloc(btrfs_qgroup_extent_record_cachep,
+					   GFP_NOFS);
 		if (!record) {
 			kmem_cache_free(btrfs_delayed_data_ref_cachep, ref);
 			kmem_cache_free(btrfs_delayed_ref_head_cachep,
