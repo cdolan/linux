@@ -965,7 +965,8 @@ int btrfs_add_delayed_tree_ref(struct btrfs_trans_handle *trans,
 	    is_fstree(generic_ref->real_root) &&
 	    is_fstree(generic_ref->tree_ref.root) &&
 	    !generic_ref->skip_qgroup) {
-		record = kzalloc(sizeof(*record), GFP_NOFS);
+		record = kmem_cache_zalloc(btrfs_qgroup_extent_record_cachep,
+					   GFP_NOFS);
 		if (!record) {
 			kmem_cache_free(btrfs_delayed_tree_ref_cachep, ref);
 			kmem_cache_free(btrfs_delayed_ref_head_cachep, head_ref);
